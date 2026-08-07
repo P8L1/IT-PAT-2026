@@ -1,0 +1,979 @@
+<!doctype html>
+<html lang="af">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'none'; img-src data:; style-src https://smarteats-ui-package.vercel.app; script-src https://smarteats-ui-package.vercel.app"
+    />
+    <title>SmartEats</title>
+
+    <link
+      id="smartEatsStyles"
+      rel="stylesheet"
+      href="https://smarteats-ui-package.vercel.app/smarteats-ui.min.css?v=77068136560f"
+    />
+    <script
+      id="smartEatsScript"
+      src="https://smarteats-ui-package.vercel.app/smarteats-ui.min.js?v=77068136560f"
+      defer
+    ></script>
+  </head>
+
+  <body>
+    <div id="assetFailure" class="asset-failure" role="alert" hidden>
+      <strong>Die SmartEats-koppelvlak kon nie volledig laai nie</strong>
+      <span
+        >Sluit SmartEats en begin die toepassing weer. Geen data-skryfaksie is
+        deur hierdie fout uitgevoer nie.</span
+      >
+    </div>
+    <noscript>
+      <div class="asset-failure" role="alert">
+        <strong>JavaScript is nie beskikbaar nie</strong>
+        <span
+          >SmartEats benodig JavaScript vir die veilige
+          Delphi/WebView2-brug.</span
+        >
+      </div>
+    </noscript>
+    <a class="skip" href="#mainContent">Spring na hoofinhoud</a>
+    <div id="offlineBanner" class="offline-banner" role="status" hidden>
+      Die ingebedde koppelvlak kon nie volledig begin nie. SmartEats is in
+      veilige leesalleen-noodmodus; herbegin die toepassing om data te verander.
+    </div>
+    <header class="mobile-header" aria-label="Kompakte navigasie">
+      <div class="mobile-brand">SmartEats</div>
+      <nav class="mobile-nav" aria-label="Primêre mobiele navigasie">
+        <button
+          type="button"
+          class="nav-button"
+          data-view-button="dashboard"
+          aria-current="page"
+        >
+          Oorsig
+        </button>
+        <button type="button" class="nav-button" data-view-button="menu">
+          Spyskaart
+        </button>
+        <button type="button" class="nav-button" data-view-button="orders">
+          Bestelling
+        </button>
+        <button type="button" class="nav-button" data-view-button="history">
+          Geskiedenis
+        </button>
+        <button type="button" class="nav-button" data-view-button="report">
+          Verslag
+        </button>
+        <button type="button" class="nav-button" data-open-dialog="helpDialog">
+          Hulp
+        </button>
+        <button type="button" class="nav-button" data-open-dialog="exitDialog">
+          Sluit
+        </button>
+      </nav>
+    </header>
+    <aside class="sidebar" aria-label="Hoofnavigasie">
+      <div class="brand">
+        <div class="brand-name">Smart<span>Eats</span></div>
+        <div class="brand-sub">Diens- en datakonsole</div>
+      </div>
+      <nav class="nav">
+        <div class="nav-label">Werkvloei</div>
+        <button
+          class="nav-button"
+          data-view-button="dashboard"
+          aria-current="page"
+        >
+          Dashboard</button
+        ><button class="nav-button" data-view-button="menu">
+          Spyskaart en voorraad</button
+        ><button class="nav-button" data-view-button="orders">
+          Nuwe bestelling</button
+        ><button class="nav-button" data-view-button="history">
+          Geskiedenis</button
+        ><button class="nav-button" data-view-button="report">
+          Dagverslag
+        </button>
+      </nav>
+      <div class="sidebar-bottom">
+        <button class="nav-button" data-open-dialog="helpDialog">
+          Hulp en kortpaaie</button
+        ><button class="nav-button" data-open-dialog="exitDialog">
+          Sluit SmartEats
+        </button>
+      </div>
+      <div class="connection">
+        <span class="dot"></span
+        ><span id="connectionText">Delphi-brug koppel...</span>
+      </div>
+    </aside>
+    <main class="main" id="mainContent">
+      <section
+        class="view"
+        data-view="dashboard"
+        aria-labelledby="dashboardTitle"
+      >
+        <div class="content">
+          <div class="page-head">
+            <div>
+              <div class="eyebrow">SmartEats Sentrum</div>
+              <h1 id="dashboardTitle" tabindex="-1">
+                Goeie dag, SmartEats-span
+              </h1>
+            </div>
+            <div class="date-block">
+              <span id="todayWeekday">Laai datum...</span
+              ><strong id="todayDisplay">-</strong>
+              <div class="tooltip tooltip-spaced">
+                <button
+                  id="refreshDashboard"
+                  class="button icon"
+                  type="button"
+                  aria-label="Verfris dashboard"
+                  aria-describedby="refreshTip"
+                  title="Verfris dashboard"
+                >
+                  <svg
+                    aria-hidden="true"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M20 11a8.1 8.1 0 0 0-15.5-2M4 4v5h5M4 13a8.1 8.1 0 0 0 15.5 2M20 20v-5h-5"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg></button
+                ><span class="tooltip-text" id="refreshTip" role="tooltip"
+                  >Verfris dashboard</span
+                >
+              </div>
+            </div>
+          </div>
+          <div
+            class="service-line"
+            role="group"
+            aria-label="Vandag se werkvloei"
+          >
+            <div class="service-step active">
+              <span>Voor diens</span><strong>Kontroleer lae voorraad</strong>
+            </div>
+            <div class="service-step">
+              <span>Tydens diens</span><strong>Neem bestellings</strong>
+            </div>
+            <div class="service-step">
+              <span>Dagafsluiting</span><strong>Genereer die dagverslag</strong>
+            </div>
+          </div>
+          <dl class="metrics">
+            <div class="metric">
+              <dt>Bestellings vandag</dt>
+              <dd id="ordersToday">-</dd>
+              <small>Sedert middernag</small>
+            </div>
+            <div class="metric">
+              <dt>Omset vandag</dt>
+              <dd id="revenueToday">-</dd>
+              <small>Insluitende BTW-bedrae</small>
+            </div>
+            <div class="metric">
+              <dt>Lae voorraad</dt>
+              <dd id="lowStockCount">-</dd>
+              <small>Item op of onder herbestelvlak</small>
+            </div>
+          </dl>
+          <div class="dashboard-grid">
+            <section class="surface" aria-labelledby="stockTitle">
+              <div class="surface-head">
+                <h2 id="stockTitle">Voorraad wat aandag vra</h2>
+              </div>
+              <div class="surface-body" id="lowStockItems">
+                <div class="loading-row">
+                  <span class="spinner" aria-hidden="true"></span
+                  ><span>Laai voorraad...</span>
+                </div>
+              </div>
+            </section>
+            <section class="surface" aria-labelledby="quickTitle">
+              <div class="surface-head">
+                <h2 id="quickTitle">Begin werk</h2>
+              </div>
+              <div class="surface-body quick-actions">
+                <button
+                  class="button primary"
+                  type="button"
+                  data-go-view="orders"
+                >
+                  Neem 'n bestelling</button
+                ><button class="button" type="button" data-go-view="menu">
+                  Werk voorraad by</button
+                ><button
+                  class="button ghost"
+                  type="button"
+                  data-go-view="report"
+                >
+                  Open dagverslag
+                </button>
+              </div>
+            </section>
+          </div>
+        </div>
+      </section>
+
+      <section class="view" data-view="menu" aria-labelledby="menuTitle" hidden>
+        <div class="content">
+          <div class="page-head">
+            <div>
+              <div class="eyebrow">Databestuur</div>
+              <h1 id="menuTitle" tabindex="-1">Spyskaart en voorraad</h1>
+              <p>Hou pryse, beskikbaarheid en herbestelvlakke op datum.</p>
+            </div>
+            <div class="action-row">
+              <button
+                class="button primary"
+                type="button"
+                data-open-dialog="addItemDialog"
+                data-write-action
+              >
+                Voeg nuwe item by</button
+              ><button
+                class="button ghost"
+                type="button"
+                data-go-view="dashboard"
+              >
+                Terug na dashboard
+              </button>
+            </div>
+          </div>
+          <div class="workspace">
+            <section class="surface">
+              <div class="surface-head">
+                <h2 id="editMenuTitle">Wysig geselekteerde item</h2>
+              </div>
+              <form id="menuForm" class="surface-body form-grid" novalidate>
+                <input id="itemId" type="hidden" />
+                <div class="field">
+                  <label for="itemName"
+                    >Itemnaam <span class="required">*</span></label
+                  ><input id="itemName" class="input" maxlength="60" required />
+                </div>
+                <div class="field">
+                  <label for="itemCategory"
+                    >Kategorie <span class="required">*</span></label
+                  ><select id="itemCategory" class="select" required>
+                    <option value="">Kies 'n kategorie</option>
+                    <option>Voorgereg</option>
+                    <option>Hoofgereg</option>
+                    <option>Nagereg</option>
+                    <option>Drankie</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="itemPrice"
+                    >Prys in rand <span class="required">*</span></label
+                  ><input
+                    id="itemPrice"
+                    class="input"
+                    inputmode="decimal"
+                    required
+                    placeholder="0,00"
+                  /><span class="field-help"
+                    >Gebruik jou plaaslike desimaalteken.</span
+                  >
+                </div>
+                <div class="field-row">
+                  <div class="field">
+                    <label for="itemStock"
+                      >Voorraad <span class="required">*</span></label
+                    ><input
+                      id="itemStock"
+                      class="input"
+                      type="number"
+                      min="0"
+                      max="100000"
+                      required
+                    />
+                  </div>
+                  <div class="field">
+                    <label for="itemReorder"
+                      >Herbestelvlak <span class="required">*</span></label
+                    ><input
+                      id="itemReorder"
+                      class="input"
+                      type="number"
+                      min="0"
+                      max="100000"
+                      required
+                    />
+                  </div>
+                </div>
+                <label class="checkbox-row"
+                  ><input id="itemAvailable" type="checkbox" /><span
+                    >Beskikbaar vir nuwe bestellings</span
+                  ></label
+                >
+                <div class="action-row">
+                  <button
+                    class="button primary"
+                    type="submit"
+                    data-write-action
+                  >
+                    Stoor wysigings</button
+                  ><button
+                    class="button danger"
+                    type="button"
+                    id="deleteItem"
+                    data-write-action
+                  >
+                    Verwyder item
+                  </button>
+                </div>
+              </form>
+            </section>
+            <section>
+              <div class="toolbar">
+                <div class="field">
+                  <label for="menuSearch">Soek item of kategorie</label
+                  ><input id="menuSearch" class="input" type="search" />
+                </div>
+                <div class="field compact">
+                  <label for="menuSort">Sorteer</label
+                  ><select id="menuSort" class="select">
+                    <option value="name">Itemnaam A-Z</option>
+                    <option value="category">Kategorie en itemnaam</option>
+                    <option value="priceAsc">Prys laag na hoog</option>
+                    <option value="priceDesc">Prys hoog na laag</option>
+                    <option value="stockAsc">Voorraad laag na hoog</option>
+                  </select>
+                </div>
+              </div>
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Item</th>
+                      <th>Kategorie</th>
+                      <th>Prys</th>
+                      <th>Voorraad</th>
+                      <th>Herbestel</th>
+                      <th>Beskikbaar</th>
+                    </tr>
+                  </thead>
+                  <tbody id="menuRows"></tbody>
+                </table>
+                <div id="menuEmpty" class="empty-state" hidden>
+                  <strong>Geen items pas by die soektog nie.</strong
+                  ><span
+                    >Maak die soekveld skoon of probeer 'n korter term.</span
+                  >
+                </div>
+              </div>
+              <div class="pagination menu-pagination">
+                <span id="menuStatus" class="status-text" aria-live="polite"
+                  >Items laai...</span
+                >
+                <div class="pagination-group" data-pager="menu"></div>
+              </div>
+            </section>
+          </div>
+        </div>
+      </section>
+
+      <section
+        class="view"
+        data-view="orders"
+        aria-labelledby="ordersTitle"
+        hidden
+      >
+        <div class="content">
+          <header class="page-head">
+            <div>
+              <div class="eyebrow">Bestellings</div>
+              <h1 id="ordersTitle" tabindex="-1">Nuwe bestelling</h1>
+              <p>
+                Kies 'n klant, besteltipe en beskikbare items. Delphi sal elke
+                waarde weer valideer.
+              </p>
+            </div>
+            <button class="button ghost" data-go-view="dashboard">
+              Terug na dashboard
+            </button>
+          </header>
+          <div
+            class="order-tabs"
+            role="tablist"
+            aria-label="Bestellingswerkruimte"
+          >
+            <button
+              class="order-tab"
+              type="button"
+              role="tab"
+              aria-selected="true"
+              data-go-view="orders"
+            >
+              Nuwe bestelling</button
+            ><button
+              class="order-tab"
+              type="button"
+              role="tab"
+              aria-selected="false"
+              data-go-view="history"
+            >
+              Geskiedenis</button
+            ><button
+              class="order-tab"
+              type="button"
+              role="tab"
+              aria-selected="false"
+              data-go-view="report"
+            >
+              Dagverslag
+            </button>
+          </div>
+          <div class="order-layout">
+            <section class="surface" aria-labelledby="orderDetailsTitle">
+              <div class="surface-head">
+                <h2 id="orderDetailsTitle">Besonderhede</h2>
+              </div>
+              <div class="surface-body form-grid">
+                <div class="field">
+                  <label for="customerSelect"
+                    >Klant <span class="required">*</span></label
+                  ><select id="customerSelect" class="select">
+                    <option value="">Kies 'n aktiewe klant</option>
+                  </select>
+                </div>
+                <button
+                  class="button"
+                  type="button"
+                  data-open-dialog="clientDialog"
+                  data-write-action
+                >
+                  Voeg klant by
+                </button>
+                <div class="field">
+                  <label for="orderType"
+                    >Besteltipe <span class="required">*</span></label
+                  ><select id="orderType" class="select">
+                    <option value="">Kies besteltipe</option>
+                    <option value="Eet-in">Eet-in</option>
+                    <option value="Wegneem">Wegneem</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="tableNumber">Tafelnommer</label
+                  ><input
+                    id="tableNumber"
+                    class="input"
+                    type="number"
+                    min="1"
+                    max="40"
+                    value="1"
+                    disabled
+                  /><span class="field-help"
+                    >Slegs vir 'n eet-in-bestelling.</span
+                  >
+                </div>
+                <div class="alert">
+                  Hoeveelhede is tot beskikbare voorraad beperk. Die bedrag werk
+                  onmiddellik by.
+                </div>
+                <button id="clearOrder" class="button ghost" type="button">
+                  Herstel ongestoorde invoer
+                </button>
+              </div>
+            </section>
+            <section class="surface" aria-labelledby="orderItemsTitle">
+              <div class="surface-head">
+                <h2 id="orderItemsTitle" tabindex="-1">Kies items</h2>
+                <span class="status-text" id="orderItemCount"
+                  >Items laai...</span
+                >
+              </div>
+              <div id="orderItems" class="item-list"></div>
+              <div id="orderItemsEmpty" class="empty-state" hidden>
+                <strong>Geen verkoopbare items is beskikbaar nie.</strong
+                ><span
+                  >Werk die spyskaart se beskikbaarheid of voorraad by voordat
+                  jy 'n bestelling neem.</span
+                ><button class="button" data-go-view="menu">
+                  Open spyskaart
+                </button>
+              </div>
+            </section>
+            <aside
+              class="surface order-summary"
+              aria-labelledby="orderTotalTitle"
+            >
+              <div class="surface-head">
+                <h2 id="orderTotalTitle">Bedrag om te betaal</h2>
+              </div>
+              <div class="surface-body">
+                <dl class="totals">
+                  <div class="total-line">
+                    <dt>Subtotaal</dt>
+                    <dd id="subtotal">R 0,00</dd>
+                  </div>
+                  <div class="total-line">
+                    <dt>BTW (15%)</dt>
+                    <dd id="vat">R 0,00</dd>
+                  </div>
+                  <div class="total-line grand">
+                    <dt>Totaal</dt>
+                    <dd id="total">R 0,00</dd>
+                  </div>
+                </dl>
+                <button
+                  id="saveOrder"
+                  class="button primary full-width-action"
+                  data-write-action
+                >
+                  Stoor bestelling
+                </button>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <section
+        class="view"
+        data-view="history"
+        aria-labelledby="historyTitle"
+        hidden
+      >
+        <div class="content">
+          <div class="page-head">
+            <div>
+              <div class="eyebrow">Bestellings</div>
+              <h1 id="historyTitle" tabindex="-1">Geskiedenis</h1>
+              <p>
+                Soek, sorteer, navigeer en verwyder vorige bestellings met
+                veilige herstel.
+              </p>
+            </div>
+            <button class="button ghost" type="button" data-go-view="dashboard">
+              Terug na dashboard
+            </button>
+          </div>
+          <div
+            class="order-tabs"
+            role="tablist"
+            aria-label="Bestellingswerkruimte"
+          >
+            <button
+              class="order-tab"
+              type="button"
+              role="tab"
+              aria-selected="false"
+              data-go-view="orders"
+            >
+              Nuwe bestelling</button
+            ><button
+              class="order-tab"
+              type="button"
+              role="tab"
+              aria-selected="true"
+              data-go-view="history"
+            >
+              Geskiedenis</button
+            ><button
+              class="order-tab"
+              type="button"
+              role="tab"
+              aria-selected="false"
+              data-go-view="report"
+            >
+              Dagverslag
+            </button>
+          </div>
+          <div class="toolbar">
+            <div class="field">
+              <label for="historySearch">Soek klant of status</label
+              ><input
+                id="historySearch"
+                class="input"
+                type="search"
+                placeholder="Byvoorbeeld: Anika of Ontvang"
+              />
+            </div>
+            <div class="field compact">
+              <label for="historySort">Sorteer</label
+              ><select id="historySort" class="select">
+                <option value="newest">Nuutste eerste</option>
+                <option value="oldest">Oudste eerste</option>
+                <option value="totalDesc">Hoogste totaal eerste</option>
+                <option value="customer">Klant A-Z</option>
+              </select>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Datum en tyd</th>
+                  <th>Klant</th>
+                  <th>Tipe</th>
+                  <th>Tafel</th>
+                  <th>Subtotaal</th>
+                  <th>BTW</th>
+                  <th>Totaal</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="historyRows"></tbody>
+            </table>
+            <div id="historyEmpty" class="empty-state" hidden>
+              <strong>Geen bestellings pas by die soektog nie.</strong
+              ><span>Maak die soekveld skoon om alle bestellings te wys.</span
+              ><button id="clearHistorySearch" class="button">
+                Maak soektog skoon
+              </button>
+            </div>
+          </div>
+          <div class="pagination">
+            <span id="historyStatus" class="status-text" aria-live="polite"
+              >Bestellings laai...</span
+            >
+            <div class="pagination-group" data-pager="history">
+              <button
+                id="deleteOrder"
+                class="button small danger"
+                data-write-action
+              >
+                Verwyder gekose
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section
+        class="view"
+        data-view="report"
+        aria-labelledby="reportTitle"
+        hidden
+      >
+        <div class="content">
+          <div class="page-head">
+            <div>
+              <div class="eyebrow">Dagafsluiting</div>
+              <h1 id="reportTitle" tabindex="-1">Daaglikse verkoopsverslag</h1>
+              <p>
+                Som verkoopte items op, sorteer dit volgens hoeveelheid en skryf
+                die resultaat as UTF-8-teks.
+              </p>
+            </div>
+            <button class="button ghost" type="button" data-go-view="dashboard">
+              Terug na dashboard
+            </button>
+          </div>
+          <div
+            class="order-tabs"
+            role="tablist"
+            aria-label="Bestellingswerkruimte"
+          >
+            <button
+              class="order-tab"
+              type="button"
+              role="tab"
+              aria-selected="false"
+              data-go-view="orders"
+            >
+              Nuwe bestelling</button
+            ><button
+              class="order-tab"
+              type="button"
+              role="tab"
+              aria-selected="false"
+              data-go-view="history"
+            >
+              Geskiedenis</button
+            ><button
+              class="order-tab"
+              type="button"
+              role="tab"
+              aria-selected="true"
+              data-go-view="report"
+            >
+              Dagverslag
+            </button>
+          </div>
+          <section id="reportData" class="surface report-output" hidden>
+            <div class="report-title">SmartEats Sentrum</div>
+            <div id="reportDateDisplay" class="report-meta">
+              DAAGLIKSE VERKOOPSVERSLAG
+            </div>
+            <div id="reportFile" class="status-text"></div>
+            <div class="table-wrap">
+              <table class="report-table">
+                <thead>
+                  <tr>
+                    <th>Item</th>
+                    <th>Aantal</th>
+                    <th>Omset</th>
+                  </tr>
+                </thead>
+                <tbody id="reportRows"></tbody>
+              </table>
+            </div>
+            <div id="reportTotal" class="report-total"></div>
+          </section>
+          <div class="toolbar toolbar-start">
+            <div class="field compact">
+              <label for="reportDate">Verslagdatum</label
+              ><input id="reportDate" class="input" type="date" />
+            </div>
+            <button
+              id="generateReport"
+              class="button primary"
+              data-write-action
+            >
+              Genereer en skryf teksdokument
+            </button>
+          </div>
+          <div id="reportEmpty" class="surface empty-state">
+            <strong>Nog geen verslag gegenereer nie.</strong
+            ><span>Kies 'n datum en genereer die produksieverslag.</span>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <dialog id="addItemDialog" aria-labelledby="addItemTitle">
+      <form id="addItemForm" novalidate>
+        <div class="modal-head">
+          <div>
+            <h2 id="addItemTitle">Voeg nuwe spyskaartitem by</h2>
+            <p>Skep 'n nuwe rekord in die bestaande Access-skema.</p>
+          </div>
+          <button
+            class="modal-icon"
+            type="button"
+            data-close-dialog
+            aria-label="Sluit"
+          >
+            X
+          </button>
+        </div>
+        <div class="modal-body">
+          <div
+            class="alert error"
+            data-error-summary
+            tabindex="-1"
+            hidden
+          ></div>
+          <div class="field">
+            <label for="addItemName"
+              >Itemnaam <span class="required">*</span></label
+            ><input id="addItemName" class="input" maxlength="60" required />
+          </div>
+          <div class="field">
+            <label for="addItemCategory"
+              >Kategorie <span class="required">*</span></label
+            ><select id="addItemCategory" class="select" required>
+              <option value="">Kies 'n kategorie</option>
+              <option>Voorgereg</option>
+              <option>Hoofgereg</option>
+              <option>Nagereg</option>
+              <option>Drankie</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="addItemPrice"
+              >Prys <span class="required">*</span></label
+            ><input
+              id="addItemPrice"
+              class="input"
+              inputmode="decimal"
+              required
+            />
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="addItemStock">Voorraad</label
+              ><input
+                id="addItemStock"
+                class="input"
+                type="number"
+                min="0"
+                max="100000"
+                value="0"
+                required
+              />
+            </div>
+            <div class="field">
+              <label for="addItemReorder">Herbestelvlak</label
+              ><input
+                id="addItemReorder"
+                class="input"
+                type="number"
+                min="0"
+                max="100000"
+                value="0"
+                required
+              />
+            </div>
+          </div>
+          <label class="checkbox-row"
+            ><input id="addItemAvailable" type="checkbox" checked /><span
+              >Beskikbaar</span
+            ></label
+          >
+        </div>
+        <div class="modal-actions">
+          <button class="button" type="button" data-close-dialog>
+            Kanselleer</button
+          ><button class="button primary" type="submit" data-write-action>
+            Voeg item by
+          </button>
+        </div>
+      </form>
+    </dialog>
+    <dialog id="clientDialog" aria-labelledby="clientTitle">
+      <form id="clientForm" novalidate>
+        <div class="modal-head">
+          <div>
+            <h2 id="clientTitle">Voeg klant by</h2>
+            <p>
+              Gebruik slegs die velde wat reeds in die Access-skema bestaan.
+            </p>
+          </div>
+          <button
+            class="modal-icon"
+            type="button"
+            data-close-dialog
+            aria-label="Sluit"
+          >
+            X
+          </button>
+        </div>
+        <div class="modal-body">
+          <div
+            class="alert error"
+            data-error-summary
+            tabindex="-1"
+            hidden
+          ></div>
+          <div class="field">
+            <label for="clientName">Naam <span class="required">*</span></label
+            ><input
+              id="clientName"
+              class="input"
+              maxlength="50"
+              autocomplete="name"
+              required
+            />
+          </div>
+          <div class="field">
+            <label for="clientPhone"
+              >Selfoon <span class="required">*</span></label
+            ><input
+              id="clientPhone"
+              class="input"
+              maxlength="15"
+              inputmode="tel"
+              autocomplete="tel"
+              placeholder="0825550107"
+              required
+            />
+          </div>
+          <div class="field">
+            <label for="clientEmail"
+              >E-pos <span class="status-text">(opsioneel)</span></label
+            ><input
+              id="clientEmail"
+              class="input"
+              maxlength="100"
+              type="email"
+              autocomplete="email"
+            />
+          </div>
+          <label class="checkbox-row"
+            ><input id="clientActive" type="checkbox" checked /><span
+              >Aktief vir nuwe bestellings</span
+            ></label
+          >
+        </div>
+        <div class="modal-actions">
+          <button class="button" type="button" data-close-dialog>
+            Kanselleer</button
+          ><button class="button primary" type="submit" data-write-action>
+            Stoor klant
+          </button>
+        </div>
+      </form>
+    </dialog>
+    <dialog id="confirmDialog" aria-labelledby="confirmTitle">
+      <div class="modal-head">
+        <div>
+          <h2 id="confirmTitle">Bevestig aksie</h2>
+          <p id="confirmMessage"></p>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button class="button" data-close-dialog>Kanselleer</button
+        ><button id="confirmAction" class="button danger" data-write-action>
+          Bevestig
+        </button>
+      </div>
+    </dialog>
+    <dialog id="messageDialog" aria-labelledby="messageTitle">
+      <div class="modal-head">
+        <div>
+          <h2 id="messageTitle">SmartEats</h2>
+          <p id="messageText"></p>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button class="button primary" data-close-dialog>Goed</button>
+      </div>
+    </dialog>
+    <dialog id="helpDialog" aria-labelledby="helpTitle">
+      <div class="modal-head">
+        <div>
+          <h2 id="helpTitle">Hulp en kortpaaie</h2>
+          <p>
+            Alt+S open die spyskaart, Alt+B 'n nuwe bestelling, Alt+D die
+            dagverslag en Alt+V die sluitbevestiging. Gebruik Tab en pyltjies om
+            sonder 'n muis te werk.
+          </p>
+        </div>
+        <button class="modal-icon" data-close-dialog aria-label="Sluit">
+          X
+        </button>
+      </div>
+    </dialog>
+    <dialog id="exitDialog" aria-labelledby="exitTitle">
+      <div class="modal-head">
+        <div>
+          <h2 id="exitTitle">Sluit SmartEats?</h2>
+          <p>Ongestoorde invoer op die huidige skerm sal verlore gaan.</p>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button class="button" data-close-dialog>Kanselleer</button
+        ><button id="confirmExit" class="button danger">Sluit veilig</button>
+      </div>
+    </dialog>
+    <div
+      id="toastRegion"
+      class="toast-region"
+      aria-live="polite"
+      aria-atomic="true"
+      hidden
+    >
+      <div id="toastText" class="toast"></div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,6 @@
+# Project-local PDF build dependencies and intermediates
+node_modules/
+tools/.venv/
+tools/__pycache__/
+tmp/pdfs/
+.pdf-build/

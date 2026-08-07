@@ -1,0 +1,21 @@
+{
+  "name": "smarteats-task-pdf-build",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "build:pdfs": "node tools/build-task-pdfs.mjs"
+  },
+  "dependencies": {
+    "highlight.js": "11.11.1",
+    "katex": "0.16.22",
+    "markdown-it": "14.1.0",
+    "markdown-it-anchor": "9.2.0",
+    "markdown-it-deflist": "3.0.0",
+    "markdown-it-footnote": "4.0.0",
+    "markdown-it-task-lists": "2.1.1",
+    "markdown-it-texmath": "1.0.0",
+    "playwright-core": "1.54.2"
+  }
+}
+

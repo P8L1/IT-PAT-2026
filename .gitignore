@@ -1,0 +1,35 @@
+# Installed dependencies and local environments
+**/node_modules/
+**/.venv/
+
+# Python caches
+**/__pycache__/
+*.py[cod]
+
+# Delphi local state and compiler output
+**/Win32/
+**/Win64/
+**/__history/
+*.dproj.local
+*.identcache
+*.dcu
+*.rsm
+
+# Generated document-build intermediates
+SKRIFTELIKE_INDIENING/tmp/
+
+# Captured WebView2 runtime profile and browser caches
+NIE_VIR_INDIENING/rou_toetsbewyse/finale-herindeling-e2e/SmartEats/WebView2/
+
+# Common secret-bearing local configuration
+.env
+.env.*
+!.env.example
+!.env.sample
+
+# OS/editor metadata
+.DS_Store
+Thumbs.db
+Desktop.ini
+.idea/
+.vscode/

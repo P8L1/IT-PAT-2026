@@ -1,0 +1,3 @@
+SMARTEATS_UI_HTML RCDATA "..\\ui\\index.html"
+SMARTEATS_SEED_DB RCDATA "SmartEats.seed.accdb"
+SMARTEATS_WEBVIEW2_LOADER RCDATA "..\\runtime\\win64\\WebView2Loader.dll"

@@ -1,0 +1,14 @@
+﻿SmartEats Sentrum
+KWITANSIE / BESTELLING #1
+2026-08-03 14:35:19
+------------------------------------------------------
+E2E Toetsklient
+Besteltipe: Wegneem
+------------------------------------------------------
+Huisrooiwyn per glas           1 x      R 68.00
+------------------------------------------------------
+Subtotaal:                                    R 68.00
+BTW (15%):                                    R 10.20
+Totaal:                                       R 78.20
+
+Dankie dat jy SmartEats gekies het.
